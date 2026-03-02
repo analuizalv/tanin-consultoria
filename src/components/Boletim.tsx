@@ -25,52 +25,47 @@ const Boletim = () => {
   };
 
   return (
-    <section id="boletim" className="py-24 md:py-32 relative" ref={sectionRef}>
-      {/* Subtle background differentiation */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
+    <section id="boletim" className="py-24 md:py-32 bg-primary text-primary-foreground" ref={sectionRef}>
+      <div className="container mx-auto px-4 md:px-8 max-w-xl text-center">
+        <h2 className="animate-on-scroll font-serif text-3xl md:text-4xl font-semibold mb-4">
+          Boletim Tanin
+        </h2>
 
-      <div className="container mx-auto px-4 md:px-8 max-w-xl text-center relative z-10">
-        {/* Gold frame around content */}
-        <div
-          className="animate-on-scroll-scale border rounded-2xl px-8 py-12 md:px-12 md:py-16"
-          style={{ borderColor: "color-mix(in srgb, var(--gold) 25%, transparent)" }}
-        >
-          <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-4">
-            Boletim Tanin
-          </h2>
+        <div className="animate-on-scroll stagger-1 w-12 h-[1px] mx-auto mb-6" style={{ background: "var(--gold)" }} />
 
-          <div className="w-12 h-[1px] mx-auto mb-6" style={{ background: "var(--gold)" }} />
+        <p className="animate-on-scroll stagger-1 text-primary-foreground/70 mb-10 text-lg">
+          Insights práticos sobre proposta de valor, execução e crescimento no mercado de vinhos.
+        </p>
 
-          <p className="text-muted-foreground mb-8">
-            Insights práticos sobre proposta de valor, execução e crescimento no mercado de vinhos.
+        {sent ? (
+          <p className="font-medium" style={{ color: "var(--gold)" }}>
+            Pronto! Você vai receber o próximo Boletim.
           </p>
+        ) : (
+          <form onSubmit={handleSubmit} className="animate-on-scroll stagger-2 flex flex-col sm:flex-row gap-3">
+            <div className="flex-1">
+              <Input
+                type="email"
+                placeholder="seu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40
+                  focus:border-accent transition-all duration-300"
+              />
+              {error && <p className="text-xs text-red-300 mt-1 text-left">{error}</p>}
+            </div>
+            <Button
+              type="submit"
+              className="whitespace-nowrap bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300"
+            >
+              Quero receber
+            </Button>
+          </form>
+        )}
 
-          {sent ? (
-            <p className="text-primary font-medium">Pronto! Você vai receber o próximo Boletim.</p>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-              <div className="flex-1">
-                <Input
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background focus:ring-accent/50 focus:border-accent transition-all duration-300"
-                />
-                {error && <p className="text-xs text-destructive mt-1 text-left">{error}</p>}
-              </div>
-              <Button type="submit" className="whitespace-nowrap">
-                Quero receber
-              </Button>
-            </form>
-          )}
-
-          <p className="text-xs text-muted-foreground mt-4">Você pode sair quando quiser.</p>
-        </div>
-      </div>
-
-      <div className="container mx-auto mt-20 relative z-10">
-        <div className="gold-line opacity-20" />
+        <p className="animate-on-scroll stagger-3 text-xs text-primary-foreground/50 mt-5">
+          Você pode sair quando quiser.
+        </p>
       </div>
     </section>
   );

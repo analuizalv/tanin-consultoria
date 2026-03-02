@@ -43,7 +43,7 @@ const Navbar = () => {
             src={taninLogo}
             alt="Tanin"
             className={`transition-all duration-500 ${
-              scrolled ? "h-8" : "h-10"
+              scrolled ? "h-9" : "h-12"
             }`}
           />
         </a>
