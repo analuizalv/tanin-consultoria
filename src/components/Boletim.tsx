@@ -6,9 +6,6 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const emailSchema = z.string().trim().email("E-mail inválido").max(255);
 
-const PHOTO_SRC = "/images/wine-detail.jpg";
-const PHOTO_FALLBACK = "/images/wine-detail.svg";
-
 const Boletim = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -87,21 +84,14 @@ const Boletim = () => {
             </p>
           </div>
 
-          {/* Right — wine image */}
+          {/* Right — wine image (taças de vinho tinto vistas de cima, superfície creme) */}
           <div className="animate-on-scroll stagger-2 hidden lg:block flex-shrink-0 w-[300px] h-[380px] relative">
             <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg">
               <img
-                src={PHOTO_SRC}
-                alt="Detalhe de vinho"
+                src="/images/wine-ambient.jpeg"
+                alt="Taças de vinho tinto"
                 className="w-full h-full object-cover"
                 loading="lazy"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.dataset.fallback) {
-                    target.dataset.fallback = "true";
-                    target.src = PHOTO_FALLBACK;
-                  }
-                }}
               />
               {/* Gradient overlay for blend */}
               <div
