@@ -1,9 +1,6 @@
 import { Button } from "@/components/ui/button";
 import taninLogo from "@/assets/tanin.png";
 
-const PHOTO_SRC = "/images/ana-hero.jpg";
-const PHOTO_FALLBACK = "/images/ana-hero.svg";
-
 const Hero = () => {
   return (
     <section
@@ -16,7 +13,7 @@ const Hero = () => {
       }} />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10 py-20 md:py-24">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
           {/* Left — content */}
           <div className="flex-1 max-w-2xl">
             {/* Logo */}
@@ -77,41 +74,17 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right — Ana's photo */}
-          <div className="hero-animate-photo flex-shrink-0 w-64 h-64 md:w-80 md:h-80 lg:w-[420px] lg:h-[520px] relative">
-            {/* Gold accent ring behind photo */}
+          {/* Right — Ana's photo (PNG com fundo transparente — flutua no bg escuro) */}
+          <div className="hero-animate-photo flex-shrink-0 relative w-56 md:w-72 lg:w-[400px]">
+            {/* Subtle gold glow behind Ana */}
             <div
-              className="absolute -inset-3 rounded-[2rem] opacity-20 pointer-events-none"
-              style={{
-                border: "1.5px solid var(--gold)",
-              }}
-            />
-            {/* Photo container */}
-            <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden shadow-2xl">
-              <img
-                src={PHOTO_SRC}
-                alt="Ana Luiza — Fundadora da Tanin Consultoria"
-                className="w-full h-full object-cover object-top"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.dataset.fallback) {
-                    target.dataset.fallback = "true";
-                    target.src = PHOTO_FALLBACK;
-                  }
-                }}
-              />
-              {/* Subtle gradient overlay at bottom for depth */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: "linear-gradient(to top, hsl(350 63% 24% / 0.3) 0%, transparent 40%)",
-                }}
-              />
-            </div>
-            {/* Small gold glow element */}
-            <div
-              className="absolute -bottom-2 -right-2 w-16 h-16 rounded-full opacity-15 pointer-events-none blur-xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 rounded-full opacity-[0.07] blur-3xl pointer-events-none"
               style={{ background: "var(--gold)" }}
+            />
+            <img
+              src="/images/ana-hero.png"
+              alt="Ana Luiza — Fundadora da Tanin Consultoria"
+              className="relative w-full h-auto drop-shadow-2xl"
             />
           </div>
         </div>

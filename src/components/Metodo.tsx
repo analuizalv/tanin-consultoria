@@ -15,6 +15,7 @@ const steps: {
   desc: string;
   saida: string;
   Illustration: ComponentType<IconProps>;
+  photo?: string;
   dark: boolean;
 }[] = [
   {
@@ -23,6 +24,7 @@ const steps: {
     desc: "Entrevistas rápidas + leitura de dados para definir: para quem, qual dor, qual promessa e por que você vence.",
     saida: "Proposta de valor + mensagens-chave + prioridades",
     Illustration: IllustrationDiagnostic,
+    photo: "/images/wine-divider.png",
     dark: true,
   },
   {
@@ -92,11 +94,29 @@ const Metodo = () => {
                   isReversed ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
               >
-                {/* Illustration side */}
+                {/* Visual side — photo or illustration */}
                 <div className="w-full md:w-2/5 flex justify-center">
-                  <div className="transition-transform duration-700 hover:scale-105">
-                    <s.Illustration size={160} />
-                  </div>
+                  {s.photo ? (
+                    <div className="relative w-48 md:w-56 lg:w-64 rounded-2xl overflow-hidden shadow-lg aspect-[2/3] transition-transform duration-700 hover:scale-105">
+                      <img
+                        src={s.photo}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      {/* Subtle overlay to blend with dark bg */}
+                      <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background: "linear-gradient(to top, hsl(350 63% 24% / 0.4) 0%, transparent 50%)",
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="transition-transform duration-700 hover:scale-105">
+                      <s.Illustration size={160} />
+                    </div>
+                  )}
                 </div>
 
                 {/* Content side */}

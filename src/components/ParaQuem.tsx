@@ -31,28 +31,18 @@ const alavancas: { text: string; Icon: ComponentType<IconProps> }[] = [
   { text: "IA para escala", Icon: IconAI },
 ];
 
-const BG_SRC = "/images/wine-background.jpg";
-const BG_FALLBACK = "/images/wine-background.svg";
-
 const ParaQuem = () => {
   const sectionRef = useScrollAnimation();
 
   return (
     <section id="para-quem" className="relative bg-primary text-primary-foreground py-28 md:py-40 overflow-hidden" ref={sectionRef}>
-      {/* Background wine image */}
+      {/* Background wine image (mesa dourada com frutas e taças) */}
       <div className="absolute inset-0">
         <img
-          src={BG_SRC}
+          src="/images/wine-background.png"
           alt=""
           className="w-full h-full object-cover opacity-20"
           loading="lazy"
-          onError={(e) => {
-            const target = e.currentTarget;
-            if (!target.dataset.fallback) {
-              target.dataset.fallback = "true";
-              target.src = BG_FALLBACK;
-            }
-          }}
         />
         <div
           className="absolute inset-0"

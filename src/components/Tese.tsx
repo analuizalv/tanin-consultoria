@@ -36,15 +36,37 @@ const Tese = () => {
   return (
     <section id="tese" className="py-28 md:py-40" ref={sectionRef}>
       <div className="container mx-auto px-4 md:px-8">
-        {/* Big statement */}
-        <div className="max-w-5xl mb-20 md:mb-28">
-          <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6">
-            Performance digital e experiência física{" "}
-            <span className="italic" style={{ color: "var(--gold)" }}>não são opostos.</span>
-          </h2>
-          <p className="animate-on-scroll stagger-1 text-xl md:text-2xl text-muted-foreground max-w-2xl">
-            São o mesmo negócio — e é assim que o vinho cresce de verdade.
-          </p>
+        {/* Big statement + editorial photo */}
+        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16 mb-20 md:mb-28">
+          {/* Text */}
+          <div className="flex-1 max-w-3xl">
+            <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6">
+              Performance digital e experiência física{" "}
+              <span className="italic" style={{ color: "var(--gold)" }}>não são opostos.</span>
+            </h2>
+            <p className="animate-on-scroll stagger-1 text-xl md:text-2xl text-muted-foreground max-w-2xl">
+              São o mesmo negócio — e é assim que o vinho cresce de verdade.
+            </p>
+          </div>
+
+          {/* Editorial wine photo — 3 taças (tinto, branco, rosé) */}
+          <div className="animate-on-scroll stagger-2 flex-shrink-0 w-full max-w-[280px] lg:max-w-[320px] mx-auto lg:mx-0 lg:mt-4">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-[2/3]">
+              <img
+                src="/images/wine-detail.png"
+                alt="Três taças de vinho — tinto, branco e rosé"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              {/* Soft blend at bottom */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(to top, hsl(var(--background)) 0%, transparent 20%)",
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* 3 pillar cards */}
