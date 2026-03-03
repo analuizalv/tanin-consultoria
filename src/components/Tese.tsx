@@ -1,22 +1,32 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
-  IconBrandPerformance,
-  IconStrategyRoutine,
-  IconCadence,
+  IllustrationTarget,
+  IllustrationCalendar,
+  IllustrationCadence,
 } from "@/components/icons/WineIcons";
+import type { ComponentType, SVGProps } from "react";
 
-const bullets = [
+type IconProps = SVGProps<SVGSVGElement> & { size?: number };
+
+const pillars: {
+  title: string;
+  desc: string;
+  Illustration: ComponentType<IconProps>;
+}[] = [
   {
-    text: "Marca e performance na mesma direção",
-    Icon: IconBrandPerformance,
+    title: "Marca e performance na mesma direção",
+    desc: "Branding e growth não são forças opostas. São a mesma alavanca.",
+    Illustration: IllustrationTarget,
   },
   {
-    text: "Estratégia que cabe na rotina",
-    Icon: IconStrategyRoutine,
+    title: "Estratégia que cabe na rotina",
+    desc: "Plano realista, com cadência e prioridades que o time consegue executar.",
+    Illustration: IllustrationCalendar,
   },
   {
-    text: "Execução com método e cadência",
-    Icon: IconCadence,
+    title: "Execução com método e cadência",
+    desc: "Checkpoints, ajustes e ritmo. Sem improviso, sem complicar.",
+    Illustration: IllustrationCadence,
   },
 ];
 
@@ -24,35 +34,42 @@ const Tese = () => {
   const sectionRef = useScrollAnimation();
 
   return (
-    <section id="tese" className="py-24 md:py-32 bg-primary text-primary-foreground" ref={sectionRef}>
-      <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
-        <h2 className="animate-on-scroll font-serif text-3xl md:text-4xl font-semibold leading-tight mb-6">
-          Performance digital e experiência física não são opostos.
-        </h2>
+    <section id="tese" className="py-28 md:py-40" ref={sectionRef}>
+      <div className="container mx-auto px-4 md:px-8">
+        {/* Big statement */}
+        <div className="max-w-5xl mb-20 md:mb-28">
+          <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6">
+            Performance digital e experiência física{" "}
+            <span className="italic" style={{ color: "var(--gold)" }}>não são opostos.</span>
+          </h2>
+          <p className="animate-on-scroll stagger-1 text-xl md:text-2xl text-muted-foreground max-w-2xl">
+            São o mesmo negócio — e é assim que o vinho cresce de verdade.
+          </p>
+        </div>
 
-        <p className="animate-on-scroll stagger-1 text-lg text-primary-foreground/70 mb-16">
-          São o mesmo negócio — e é assim que o vinho cresce de verdade.
-        </p>
-
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
-          {bullets.map(({ text, Icon }, i) => (
+        {/* 3 pillar cards */}
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+          {pillars.map(({ title, desc, Illustration }, i) => (
             <div
-              key={text}
-              className={`animate-on-scroll stagger-${i + 2} flex flex-col items-center gap-5 max-w-[220px]`}
+              key={title}
+              className={`animate-on-scroll stagger-${i + 2} group relative overflow-hidden rounded-2xl p-8 md:p-10
+                transition-all duration-500 hover:-translate-y-1`}
+              style={{
+                backgroundColor: "hsl(var(--primary) / 0.04)",
+                borderLeft: "4px solid var(--gold)",
+              }}
             >
-              {/* Icon container */}
-              <div
-                className="w-[72px] h-[72px] rounded-2xl flex items-center justify-center
-                  border border-[var(--gold)]/30 bg-[var(--gold)]/[0.06]
-                  transition-all duration-300 group-hover:bg-[var(--gold)]/[0.12]"
-                style={{
-                  borderColor: "rgba(204, 190, 139, 0.25)",
-                  backgroundColor: "rgba(204, 190, 139, 0.06)",
-                }}
-              >
-                <Icon size={36} />
+              {/* Illustration */}
+              <div className="mb-6 transition-transform duration-500 group-hover:scale-105">
+                <Illustration size={100} />
               </div>
-              <p className="text-base font-medium text-primary-foreground/90 leading-relaxed text-center">{text}</p>
+
+              <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground leading-snug mb-3">
+                {title}
+              </h3>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {desc}
+              </p>
             </div>
           ))}
         </div>

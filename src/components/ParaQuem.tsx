@@ -1,8 +1,8 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
-  IconImporter,
-  IconWinery,
-  IconBrand,
+  IllustrationImporter,
+  IllustrationWinery,
+  IllustrationBrand,
   IconCRM,
   IconContent,
   IconPR,
@@ -13,16 +13,20 @@ import type { ComponentType, SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
-const segments: { label: string; sub: string; Icon: ComponentType<IconProps> }[] = [
-  { label: "Importadoras", sub: "Posicionamento e sell-out", Icon: IconImporter },
-  { label: "Vinícolas", sub: "Marca e DTC", Icon: IconWinery },
-  { label: "Marcas do setor", sub: "Growth e diferenciação", Icon: IconBrand },
+const segments: {
+  label: string;
+  sub: string;
+  Illustration: ComponentType<IconProps>;
+}[] = [
+  { label: "Importadoras", sub: "Posicionamento, sell-out e diferenciação no portfólio", Illustration: IllustrationImporter },
+  { label: "Vinícolas", sub: "Marca, DTC e presença direta no mercado", Illustration: IllustrationWinery },
+  { label: "Marcas do setor", sub: "Growth, storytelling e estratégia competitiva", Illustration: IllustrationBrand },
 ];
 
-const alavancas: { text: string; Icon: ComponentType<IconProps>; wide?: boolean }[] = [
-  { text: "CRM & retenção", Icon: IconCRM, wide: true },
-  { text: "Conteúdo e mídia", Icon: IconContent, wide: true },
-  { text: "PR estratégico e influência", Icon: IconPR },
+const alavancas: { text: string; Icon: ComponentType<IconProps> }[] = [
+  { text: "CRM & retenção", Icon: IconCRM },
+  { text: "Conteúdo e mídia", Icon: IconContent },
+  { text: "PR estratégico", Icon: IconPR },
   { text: "Experiências e ativações", Icon: IconExperience },
   { text: "IA para escala", Icon: IconAI },
 ];
@@ -31,76 +35,76 @@ const ParaQuem = () => {
   const sectionRef = useScrollAnimation();
 
   return (
-    <section id="para-quem" className="overflow-hidden" ref={sectionRef}>
-      {/* Segments — dark featured strip */}
-      <div className="bg-primary text-primary-foreground py-24 md:py-32">
-        <div className="container mx-auto px-4 md:px-8 max-w-5xl">
-          <h2 className="animate-on-scroll font-serif text-3xl md:text-4xl font-semibold text-center mb-4">
-            Para quem a Tanin é
+    <section id="para-quem" className="bg-primary text-primary-foreground py-28 md:py-40 overflow-hidden" ref={sectionRef}>
+      <div className="container mx-auto px-4 md:px-8">
+        {/* Bold heading */}
+        <div className="max-w-5xl mb-20 md:mb-28">
+          <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
+            Para quem a Tanin{" "}
+            <span className="italic" style={{ color: "var(--gold)" }}>existe.</span>
           </h2>
-          <div className="animate-on-scroll stagger-1 mx-auto mb-16 w-12 h-[1px]" style={{ background: "var(--gold)" }} />
-
-          <div className="animate-on-scroll stagger-2 grid md:grid-cols-3 gap-0 rounded-2xl overflow-hidden border"
-            style={{ borderColor: "rgba(204, 190, 139, 0.15)" }}
-          >
-            {segments.map((s, i) => (
-              <div
-                key={s.label}
-                className={`group relative flex flex-col items-center justify-center py-14 px-8 text-center
-                  transition-all duration-500 hover:bg-primary-foreground/[0.04]
-                  ${i < segments.length - 1 ? "border-b md:border-b-0 md:border-r" : ""}`}
-                style={{ borderColor: "rgba(204, 190, 139, 0.15)" }}
-              >
-                {/* Large icon */}
-                <div className="mb-6 transition-transform duration-500 group-hover:scale-110">
-                  <s.Icon size={48} />
-                </div>
-
-                <h3 className="font-serif text-xl font-semibold mb-2">{s.label}</h3>
-                <p className="text-sm text-primary-foreground/50">{s.sub}</p>
-
-                {/* Gold accent bar on hover */}
-                <div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-16 transition-all duration-500"
-                  style={{ background: "var(--gold)" }}
-                />
-              </div>
-            ))}
-          </div>
+          <p className="animate-on-scroll stagger-1 text-xl md:text-2xl text-primary-foreground/60">
+            Consultoria focada em três perfis do mercado de vinhos.
+          </p>
         </div>
-      </div>
 
-      {/* Alavancas — bento grid on light bg */}
-      <div className="bg-muted/30 py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
-          <h3 className="animate-on-scroll font-serif text-2xl md:text-3xl font-semibold text-foreground text-center mb-14">
-            Alavancas que podem entrar no plano
+        {/* Segment horizontal cards */}
+        <div className="flex flex-col gap-6 md:gap-0 mb-24 md:mb-32">
+          {segments.map((s, i) => (
+            <div
+              key={s.label}
+              className={`animate-on-scroll stagger-${i + 2} group flex flex-col md:flex-row items-center gap-8 md:gap-12
+                py-8 md:py-12 ${i < segments.length - 1 ? "border-b" : ""}`}
+              style={{ borderColor: "rgba(204,190,139,0.12)" }}
+            >
+              {/* Illustration */}
+              <div className="shrink-0 transition-transform duration-500 group-hover:scale-110">
+                <s.Illustration size={90} />
+              </div>
+
+              {/* Text */}
+              <div className="text-center md:text-left">
+                <h3 className="font-serif text-2xl md:text-3xl font-bold mb-2">{s.label}</h3>
+                <p className="text-base md:text-lg text-primary-foreground/55">{s.sub}</p>
+              </div>
+
+              {/* Decorative arrow (desktop) */}
+              <div className="hidden md:block ml-auto opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-0 group-hover:translate-x-2">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Alavancas heading + pills */}
+        <div>
+          <h3 className="animate-on-scroll font-serif text-2xl md:text-4xl font-bold mb-10">
+            Alavancas que entram no plano
           </h3>
 
-          {/* Bento grid: 2 wide on top, 3 equal below */}
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-            {alavancas.map((a, i) => (
+          <div className="animate-on-scroll stagger-1 flex flex-wrap gap-4">
+            {alavancas.map((a) => (
               <div
                 key={a.text}
-                className={`animate-on-scroll stagger-${i + 1} group
-                  rounded-xl border border-border bg-background p-6
-                  flex flex-col items-center justify-center gap-3 text-center
-                  transition-all duration-300 hover:-translate-y-1
-                  ${a.wide ? "col-span-2 md:col-span-3" : "col-span-2"}`}
-                style={{ minHeight: "120px" }}
+                className="group flex items-center gap-3 px-6 py-4 rounded-full
+                  transition-all duration-300 hover:scale-105 cursor-default"
+                style={{
+                  background: "rgba(204,190,139,0.1)",
+                  border: "1px solid rgba(204,190,139,0.2)",
+                }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(204, 190, 139, 0.4)";
-                  e.currentTarget.style.boxShadow = "0 8px 24px rgba(204, 190, 139, 0.08)";
+                  e.currentTarget.style.background = "rgba(204,190,139,0.18)";
+                  e.currentTarget.style.borderColor = "rgba(204,190,139,0.4)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "";
-                  e.currentTarget.style.boxShadow = "";
+                  e.currentTarget.style.background = "rgba(204,190,139,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(204,190,139,0.2)";
                 }}
               >
-                <span className="opacity-60 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
-                  <a.Icon size={28} />
-                </span>
-                <span className="text-sm font-medium text-foreground">{a.text}</span>
+                <a.Icon size={22} />
+                <span className="text-base md:text-lg font-medium text-primary-foreground/90">{a.text}</span>
               </div>
             ))}
           </div>

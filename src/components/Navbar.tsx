@@ -29,21 +29,15 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      {/* Gold accent line at top when scrolled */}
-      <div
-        className={`absolute top-0 left-0 right-0 h-[1px] transition-opacity duration-500 ${
-          scrolled ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ background: "linear-gradient(to right, transparent, var(--gold) 30%, var(--gold) 70%, transparent)" }}
-      />
-
       <div className="container mx-auto flex items-center justify-between py-4 px-4 md:px-8">
         <a href="#inicio" className="flex items-center gap-2 group">
           <img
             src={taninLogo}
             alt="Tanin"
             className={`transition-all duration-500 h-8 ${
-              scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+              scrolled
+                ? "opacity-100"
+                : "opacity-80 brightness-0 invert"
             }`}
           />
         </a>
@@ -54,10 +48,14 @@ const Navbar = () => {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="relative text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-300
+                className={`relative text-sm font-medium transition-colors duration-300
                   after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
                   after:bg-[var(--gold)] after:transition-all after:duration-300
-                  hover:after:w-full"
+                  hover:after:w-full ${
+                    scrolled
+                      ? "text-foreground/70 hover:text-primary"
+                      : "text-primary-foreground/70 hover:text-primary-foreground"
+                  }`}
               >
                 {l.label}
               </a>
@@ -68,7 +66,7 @@ const Navbar = () => {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground p-1"
+          className={`md:hidden p-1 transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`}
           aria-label="Abrir menu"
         >
           {open ? <X size={24} /> : <Menu size={24} />}
@@ -94,7 +92,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Bottom gold line when scrolled */}
+      {/* Bottom accent when scrolled */}
       <div
         className={`absolute bottom-0 left-0 right-0 h-[1px] transition-opacity duration-500 ${
           scrolled ? "opacity-40" : "opacity-0"
