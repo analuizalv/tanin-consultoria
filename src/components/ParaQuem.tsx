@@ -31,12 +31,38 @@ const alavancas: { text: string; Icon: ComponentType<IconProps> }[] = [
   { text: "IA para escala", Icon: IconAI },
 ];
 
+const BG_SRC = "/images/wine-background.jpg";
+const BG_FALLBACK = "/images/wine-background.svg";
+
 const ParaQuem = () => {
   const sectionRef = useScrollAnimation();
 
   return (
-    <section id="para-quem" className="bg-primary text-primary-foreground py-28 md:py-40 overflow-hidden" ref={sectionRef}>
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="para-quem" className="relative bg-primary text-primary-foreground py-28 md:py-40 overflow-hidden" ref={sectionRef}>
+      {/* Background wine image */}
+      <div className="absolute inset-0">
+        <img
+          src={BG_SRC}
+          alt=""
+          className="w-full h-full object-cover opacity-20"
+          loading="lazy"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (!target.dataset.fallback) {
+              target.dataset.fallback = "true";
+              target.src = BG_FALLBACK;
+            }
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, hsl(350 63% 24% / 0.85) 0%, hsl(350 63% 24% / 0.7) 50%, hsl(350 63% 24% / 0.9) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Bold heading */}
         <div className="max-w-5xl mb-20 md:mb-28">
           <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
@@ -110,6 +136,11 @@ const ParaQuem = () => {
           </div>
         </div>
       </div>
+
+      {/* Texture overlay for extra depth */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ccbe8b' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      }} />
     </section>
   );
 };

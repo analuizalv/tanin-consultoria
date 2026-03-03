@@ -6,6 +6,9 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const emailSchema = z.string().trim().email("E-mail inválido").max(255);
 
+const PHOTO_SRC = "/images/wine-detail.jpg";
+const PHOTO_FALLBACK = "/images/wine-detail.svg";
+
 const Boletim = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -38,48 +41,82 @@ const Boletim = () => {
         style={{ background: "var(--gold)" }} />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl font-bold text-primary leading-[1.1] mb-6">
-            Boletim{" "}
-            <span className="italic" style={{ color: "var(--gold)" }}>Tanin</span>
-          </h2>
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          {/* Left — content */}
+          <div className="flex-1 text-center lg:text-left max-w-2xl lg:max-w-none">
+            <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl font-bold text-primary leading-[1.1] mb-6">
+              Boletim{" "}
+              <span className="italic" style={{ color: "var(--gold)" }}>Tanin</span>
+            </h2>
 
-          <p className="animate-on-scroll stagger-1 text-lg md:text-xl text-muted-foreground mb-12">
-            Insights práticos sobre proposta de valor, execução e crescimento no mercado de vinhos.
-          </p>
+            <p className="animate-on-scroll stagger-1 text-lg md:text-xl text-muted-foreground mb-12">
+              Insights práticos sobre proposta de valor, execução e crescimento no mercado de vinhos.
+            </p>
 
-          {sent ? (
-            <div className="animate-on-scroll py-8">
-              <p className="text-xl font-serif font-semibold text-primary">
-                Pronto! Você vai receber o próximo Boletim.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="animate-on-scroll stagger-2 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-              <div className="flex-1">
-                <Input
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-border text-foreground placeholder:text-muted-foreground/50
-                    focus:border-primary h-12 text-base transition-all duration-300"
-                />
-                {error && <p className="text-xs text-destructive mt-1 text-left">{error}</p>}
+            {sent ? (
+              <div className="animate-on-scroll py-8">
+                <p className="text-xl font-serif font-semibold text-primary">
+                  Pronto! Você vai receber o próximo Boletim.
+                </p>
               </div>
-              <Button
-                type="submit"
-                size="lg"
-                className="whitespace-nowrap h-12 text-base font-semibold px-8"
-              >
-                Quero receber
-              </Button>
-            </form>
-          )}
+            ) : (
+              <form onSubmit={handleSubmit} className="animate-on-scroll stagger-2 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0">
+                <div className="flex-1">
+                  <Input
+                    type="email"
+                    placeholder="seu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-background border-border text-foreground placeholder:text-muted-foreground/50
+                      focus:border-primary h-12 text-base transition-all duration-300"
+                  />
+                  {error && <p className="text-xs text-destructive mt-1 text-left">{error}</p>}
+                </div>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="whitespace-nowrap h-12 text-base font-semibold px-8"
+                >
+                  Quero receber
+                </Button>
+              </form>
+            )}
 
-          <p className="animate-on-scroll stagger-3 text-sm text-muted-foreground/60 mt-6">
-            Você pode sair quando quiser.
-          </p>
+            <p className="animate-on-scroll stagger-3 text-sm text-muted-foreground/60 mt-6">
+              Você pode sair quando quiser.
+            </p>
+          </div>
+
+          {/* Right — wine image */}
+          <div className="animate-on-scroll stagger-2 hidden lg:block flex-shrink-0 w-[300px] h-[380px] relative">
+            <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src={PHOTO_SRC}
+                alt="Detalhe de vinho"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.fallback) {
+                    target.dataset.fallback = "true";
+                    target.src = PHOTO_FALLBACK;
+                  }
+                }}
+              />
+              {/* Gradient overlay for blend */}
+              <div
+                className="absolute inset-0 pointer-events-none rounded-2xl"
+                style={{
+                  background: "linear-gradient(135deg, hsl(43 34% 92% / 0.15) 0%, transparent 60%)",
+                }}
+              />
+            </div>
+            {/* Gold decorative accent */}
+            <div
+              className="absolute -top-2 -left-2 w-12 h-12 rounded-full opacity-20 pointer-events-none blur-lg"
+              style={{ background: "var(--gold)" }}
+            />
+          </div>
         </div>
       </div>
     </section>
