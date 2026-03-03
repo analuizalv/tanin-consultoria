@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import {
-  IconDiagnostic,
-  IconPlan,
-  IconGovernance,
+  IllustrationDiagnostic,
+  IllustrationPlan,
+  IllustrationGovernance,
 } from "@/components/icons/WineIcons";
 import type { ComponentType, SVGProps } from "react";
 
@@ -14,28 +14,32 @@ const steps: {
   title: string;
   desc: string;
   saida: string;
-  Icon: ComponentType<IconProps>;
+  Illustration: ComponentType<IconProps>;
+  dark: boolean;
 }[] = [
   {
     num: "01",
     title: "Diagnóstico + proposta de valor",
     desc: "Entrevistas rápidas + leitura de dados para definir: para quem, qual dor, qual promessa e por que você vence.",
-    saida: "Proposta de valor + mensagens-chave + prioridades.",
-    Icon: IconDiagnostic,
+    saida: "Proposta de valor + mensagens-chave + prioridades",
+    Illustration: IllustrationDiagnostic,
+    dark: true,
   },
   {
     num: "02",
     title: "Plano de 90 dias",
-    desc: "Prioridades, calendário macro, iniciativas, owners e indicadores.",
-    saida: "Plano acionável.",
-    Icon: IconPlan,
+    desc: "Prioridades, calendário macro, iniciativas, owners e indicadores — tudo num documento acionável.",
+    saida: "Plano acionável",
+    Illustration: IllustrationPlan,
+    dark: false,
   },
   {
     num: "03",
     title: "Acompanhamento e governança",
     desc: "Cadência (weekly/quinzenal), checkpoints e ajustes para o plano sair do papel.",
-    saida: "Execução consistente.",
-    Icon: IconGovernance,
+    saida: "Execução consistente",
+    Illustration: IllustrationGovernance,
+    dark: true,
   },
 ];
 
@@ -43,124 +47,105 @@ const Metodo = () => {
   const sectionRef = useScrollAnimation();
 
   return (
-    <section id="metodo" className="py-24 md:py-36" ref={sectionRef}>
-      <div className="container mx-auto px-4 md:px-8 max-w-5xl">
-        <h2 className="animate-on-scroll font-serif text-3xl md:text-4xl font-semibold text-foreground text-center mb-4">
-          Do diagnóstico à execução, sem complicar.
-        </h2>
-        <div className="animate-on-scroll stagger-1 mx-auto mb-20 w-12 h-[1px]" style={{ background: "var(--gold)" }} />
+    <section id="metodo" ref={sectionRef}>
+      {/* Section header */}
+      <div className="py-20 md:py-28 text-center">
+        <div className="container mx-auto px-4 md:px-8">
+          <h2 className="animate-on-scroll font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6">
+            Do diagnóstico à{" "}
+            <span className="italic" style={{ color: "var(--gold)" }}>execução.</span>
+          </h2>
+          <p className="animate-on-scroll stagger-1 text-xl md:text-2xl text-muted-foreground">
+            Sem complicar. Três etapas, um caminho claro.
+          </p>
+        </div>
+      </div>
 
-        {/* Vertical timeline */}
-        <div className="relative">
-          {/* Central gold line (desktop) / left line (mobile) */}
+      {/* Infographic bands */}
+      {steps.map((s, i) => {
+        const isReversed = i % 2 !== 0;
+
+        return (
           <div
-            className="absolute top-0 bottom-0 left-6 md:left-1/2 w-[1px] md:-translate-x-[0.5px]"
-            style={{
-              background: "linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent)",
-              opacity: 0.3,
-            }}
-          />
+            key={s.num}
+            className={`relative overflow-hidden ${
+              s.dark ? "bg-primary text-primary-foreground" : "bg-background text-foreground"
+            }`}
+          >
+            {/* Giant watermark number */}
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 font-serif font-bold leading-none pointer-events-none select-none ${
+                isReversed ? "left-4 md:left-12" : "right-4 md:right-12"
+              }`}
+              style={{
+                fontSize: "clamp(120px, 20vw, 280px)",
+                color: "var(--gold)",
+                opacity: s.dark ? 0.06 : 0.05,
+              }}
+            >
+              {s.num}
+            </div>
 
-          <div className="flex flex-col gap-16 md:gap-24">
-            {steps.map((s, i) => {
-              const isLeft = i % 2 === 0;
-
-              return (
-                <div
-                  key={s.num}
-                  className={`animate-on-scroll stagger-${i + 2} relative flex items-start md:items-center gap-6 md:gap-0`}
-                >
-                  {/* Waypoint dot */}
-                  <div
-                    className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full border-2 bg-background"
-                    style={{ borderColor: "var(--gold)" }}
-                  >
-                    <div
-                      className="absolute inset-1 rounded-full"
-                      style={{ backgroundColor: "var(--gold)", opacity: 0.5 }}
-                    />
-                  </div>
-
-                  {/* Desktop: alternating sides */}
-                  {/* Left content (desktop) */}
-                  <div className={`hidden md:flex w-1/2 ${isLeft ? "justify-end pr-12" : ""}`}>
-                    {isLeft && <StepCard step={s} align="right" />}
-                  </div>
-
-                  {/* Right content (desktop) */}
-                  <div className={`hidden md:flex w-1/2 ${!isLeft ? "justify-start pl-12" : ""}`}>
-                    {!isLeft && <StepCard step={s} align="left" />}
-                  </div>
-
-                  {/* Mobile: all on the right */}
-                  <div className="md:hidden pl-12 flex-1">
-                    <StepCard step={s} align="left" />
+            <div className="container mx-auto px-4 md:px-8 py-16 md:py-24 relative z-10">
+              <div
+                className={`animate-on-scroll stagger-${i + 1} flex flex-col gap-10 items-center ${
+                  isReversed ? "md:flex-row-reverse" : "md:flex-row"
+                }`}
+              >
+                {/* Illustration side */}
+                <div className="w-full md:w-2/5 flex justify-center">
+                  <div className="transition-transform duration-700 hover:scale-105">
+                    <s.Illustration size={160} />
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
 
-        <div className="animate-on-scroll stagger-5 text-center mt-20">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="text-base border-primary/30 hover:bg-primary/5 hover:border-primary/50 transition-all duration-300"
-          >
-            <a href="#contato">Quero conversar</a>
-          </Button>
-        </div>
+                {/* Content side */}
+                <div className="w-full md:w-3/5">
+                  <span
+                    className="inline-block font-serif text-5xl md:text-6xl font-bold mb-4"
+                    style={{ color: "var(--gold)" }}
+                  >
+                    {s.num}
+                  </span>
+
+                  <h3 className="font-serif text-2xl md:text-4xl font-bold leading-snug mb-5">
+                    {s.title}
+                  </h3>
+
+                  <p className={`text-lg md:text-xl leading-relaxed mb-6 ${
+                    s.dark ? "text-primary-foreground/70" : "text-muted-foreground"
+                  }`}>
+                    {s.desc}
+                  </p>
+
+                  <span
+                    className="inline-block text-sm font-semibold px-5 py-2 rounded-full"
+                    style={{
+                      background: s.dark ? "rgba(204,190,139,0.12)" : "rgba(204,190,139,0.15)",
+                      color: "var(--gold)",
+                    }}
+                  >
+                    Saída → {s.saida}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+
+      {/* CTA after steps */}
+      <div className="py-16 md:py-20 text-center bg-background">
+        <Button
+          asChild
+          size="lg"
+          className="text-base font-semibold px-10 py-6"
+        >
+          <a href="#contato">Quero conversar</a>
+        </Button>
       </div>
     </section>
   );
 };
-
-function StepCard({
-  step,
-  align,
-}: {
-  step: (typeof steps)[number];
-  align: "left" | "right";
-}) {
-  return (
-    <div
-      className={`group max-w-md flex flex-col ${
-        align === "right" ? "items-end text-right" : "items-start text-left"
-      }`}
-    >
-      {/* Icon + number row */}
-      <div className={`flex items-center gap-4 mb-5 ${align === "right" ? "flex-row-reverse" : ""}`}>
-        <div
-          className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0
-            transition-all duration-300 group-hover:scale-105"
-          style={{
-            backgroundColor: "rgba(204, 190, 139, 0.08)",
-            border: "1px solid rgba(204, 190, 139, 0.25)",
-          }}
-        >
-          <step.Icon size={30} />
-        </div>
-        <span
-          className="font-serif text-5xl font-bold leading-none opacity-20"
-          style={{ color: "var(--gold)" }}
-        >
-          {step.num}
-        </span>
-      </div>
-
-      <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
-        {step.title}
-      </h3>
-      <p className="text-base text-muted-foreground leading-relaxed mb-4">
-        {step.desc}
-      </p>
-      <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
-        Saída: {step.saida}
-      </p>
-    </div>
-  );
-}
 
 export default Metodo;
