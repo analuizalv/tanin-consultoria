@@ -28,7 +28,7 @@ const Hero = () => {
             <img
               src={taninLogo}
               alt="Tanin Consultoria"
-              className="h-20 md:h-28 mx-auto"
+              className="h-28 md:h-36 mx-auto"
             />
           </div>
 

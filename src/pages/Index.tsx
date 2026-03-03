@@ -7,21 +7,11 @@ import Boletim from "@/components/Boletim";
 import Contato from "@/components/Contato";
 import Footer from "@/components/Footer";
 
-const SectionGradient = ({
-  from,
-  to,
-  height = "h-20",
-}: {
-  from: string;
-  to: string;
-  height?: string;
-}) => (
-  <div
-    className={`${height} w-full pointer-events-none`}
-    style={{
-      background: `linear-gradient(to bottom, ${from}, ${to})`,
-    }}
-  />
+/** Thin gold divider between sections */
+const GoldDivider = () => (
+  <div className="w-full flex justify-center py-0">
+    <div className="gold-line w-full opacity-20" />
+  </div>
 );
 
 const Index = () => {
@@ -30,20 +20,15 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        {/* Hero → Tese: fade into wine */}
-        <SectionGradient from="hsl(var(--background))" to="hsl(var(--primary))" />
+        <GoldDivider />
         <Tese />
-        {/* Tese → Método: wine back to background */}
-        <SectionGradient from="hsl(var(--primary))" to="hsl(var(--background))" />
+        <GoldDivider />
         <Metodo />
-        {/* Método → ParaQuem: subtle shift to muted */}
-        <SectionGradient from="hsl(var(--background))" to="hsl(var(--muted) / 0.5)" height="h-12" />
+        <GoldDivider />
         <ParaQuem />
-        {/* ParaQuem → Boletim: muted back to wine */}
-        <SectionGradient from="hsl(var(--muted) / 0.5)" to="hsl(var(--primary))" />
+        <GoldDivider />
         <Boletim />
-        {/* Boletim → Contato: wine back to background */}
-        <SectionGradient from="hsl(var(--primary))" to="hsl(var(--background))" />
+        <GoldDivider />
         <Contato />
       </main>
       <Footer />

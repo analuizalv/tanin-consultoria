@@ -43,77 +43,66 @@ const Metodo = () => {
   const sectionRef = useScrollAnimation();
 
   return (
-    <section id="metodo" className="py-24 md:py-32" ref={sectionRef}>
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="metodo" className="py-24 md:py-36" ref={sectionRef}>
+      <div className="container mx-auto px-4 md:px-8 max-w-5xl">
         <h2 className="animate-on-scroll font-serif text-3xl md:text-4xl font-semibold text-foreground text-center mb-4">
           Do diagnóstico à execução, sem complicar.
         </h2>
-        <div className="animate-on-scroll stagger-1 mx-auto mb-16 w-12 h-[1px]" style={{ background: "var(--gold)" }} />
+        <div className="animate-on-scroll stagger-1 mx-auto mb-20 w-12 h-[1px]" style={{ background: "var(--gold)" }} />
 
-        {/* Cards with timeline connector */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* Horizontal connector line (desktop only) */}
+        {/* Vertical timeline */}
+        <div className="relative">
+          {/* Central gold line (desktop) / left line (mobile) */}
           <div
-            className="hidden md:block absolute top-[88px] left-[15%] right-[15%] h-[1px]"
+            className="absolute top-0 bottom-0 left-6 md:left-1/2 w-[1px] md:-translate-x-[0.5px]"
             style={{
-              background: "repeating-linear-gradient(to right, var(--gold) 0px, var(--gold) 6px, transparent 6px, transparent 14px)",
-              opacity: 0.35,
+              background: "linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent)",
+              opacity: 0.3,
             }}
           />
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((s, i) => (
-              <div
-                key={s.num}
-                className={`animate-on-scroll stagger-${i + 2} group relative border border-border rounded-xl p-8 md:p-10 flex flex-col items-center text-center
-                  bg-background transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-                style={{
-                  // subtle gold glow on hover via box-shadow
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(204, 190, 139, 0.4)";
-                  e.currentTarget.style.boxShadow = "0 8px 32px rgba(204, 190, 139, 0.1)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "";
-                  e.currentTarget.style.boxShadow = "";
-                }}
-              >
-                {/* Icon */}
+          <div className="flex flex-col gap-16 md:gap-24">
+            {steps.map((s, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
                 <div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center mb-5"
-                  style={{
-                    borderColor: "rgba(204, 190, 139, 0.25)",
-                    backgroundColor: "rgba(204, 190, 139, 0.06)",
-                    border: "1px solid rgba(204, 190, 139, 0.25)",
-                  }}
+                  key={s.num}
+                  className={`animate-on-scroll stagger-${i + 2} relative flex items-start md:items-center gap-6 md:gap-0`}
                 >
-                  <s.Icon size={34} />
+                  {/* Waypoint dot */}
+                  <div
+                    className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full border-2 bg-background"
+                    style={{ borderColor: "var(--gold)" }}
+                  >
+                    <div
+                      className="absolute inset-1 rounded-full"
+                      style={{ backgroundColor: "var(--gold)", opacity: 0.5 }}
+                    />
+                  </div>
+
+                  {/* Desktop: alternating sides */}
+                  {/* Left content (desktop) */}
+                  <div className={`hidden md:flex w-1/2 ${isLeft ? "justify-end pr-12" : ""}`}>
+                    {isLeft && <StepCard step={s} align="right" />}
+                  </div>
+
+                  {/* Right content (desktop) */}
+                  <div className={`hidden md:flex w-1/2 ${!isLeft ? "justify-start pl-12" : ""}`}>
+                    {!isLeft && <StepCard step={s} align="left" />}
+                  </div>
+
+                  {/* Mobile: all on the right */}
+                  <div className="md:hidden pl-12 flex-1">
+                    <StepCard step={s} align="left" />
+                  </div>
                 </div>
-
-                {/* Step number */}
-                <span
-                  className="font-serif text-3xl font-semibold mb-4 block"
-                  style={{ color: "var(--gold)" }}
-                >
-                  {s.num}
-                </span>
-
-                <h3 className="font-serif text-lg font-semibold text-foreground mb-4">
-                  {s.title}
-                </h3>
-                <p className="text-base text-muted-foreground leading-relaxed mb-5 flex-1">
-                  {s.desc}
-                </p>
-                <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
-                  Saída: {s.saida}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        <div className="animate-on-scroll stagger-5 text-center mt-14">
+        <div className="animate-on-scroll stagger-5 text-center mt-20">
           <Button
             asChild
             variant="outline"
@@ -127,5 +116,51 @@ const Metodo = () => {
     </section>
   );
 };
+
+function StepCard({
+  step,
+  align,
+}: {
+  step: (typeof steps)[number];
+  align: "left" | "right";
+}) {
+  return (
+    <div
+      className={`group max-w-md flex flex-col ${
+        align === "right" ? "items-end text-right" : "items-start text-left"
+      }`}
+    >
+      {/* Icon + number row */}
+      <div className={`flex items-center gap-4 mb-5 ${align === "right" ? "flex-row-reverse" : ""}`}>
+        <div
+          className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0
+            transition-all duration-300 group-hover:scale-105"
+          style={{
+            backgroundColor: "rgba(204, 190, 139, 0.08)",
+            border: "1px solid rgba(204, 190, 139, 0.25)",
+          }}
+        >
+          <step.Icon size={30} />
+        </div>
+        <span
+          className="font-serif text-5xl font-bold leading-none opacity-20"
+          style={{ color: "var(--gold)" }}
+        >
+          {step.num}
+        </span>
+      </div>
+
+      <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
+        {step.title}
+      </h3>
+      <p className="text-base text-muted-foreground leading-relaxed mb-4">
+        {step.desc}
+      </p>
+      <p className="text-sm font-medium" style={{ color: "var(--gold)" }}>
+        Saída: {step.saida}
+      </p>
+    </div>
+  );
+}
 
 export default Metodo;
