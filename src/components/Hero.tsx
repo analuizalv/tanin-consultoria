@@ -1,24 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import taninLogo from "@/assets/tanin.png";
 
 const Hero = () => {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
     >
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23651827' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       }} />
 
+      {/* Decorative radial glow behind logo */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06] pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, var(--gold) 0%, transparent 70%)",
+        }}
+      />
+
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
+          {/* Big centered logo */}
+          <div className="hero-animate-logo mb-8">
+            <img
+              src={taninLogo}
+              alt="Tanin Consultoria"
+              className="h-20 md:h-28 mx-auto"
+            />
+          </div>
+
+          {/* Gold decorative line below logo */}
+          <div className="hero-animate-subtitle mx-auto mb-10 w-24 h-[1px]" style={{ background: "linear-gradient(to right, transparent, var(--gold), transparent)" }} />
+
           <h1 className="hero-animate-title font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6">
             Por que eu deveria escolher o seu vinho?
           </h1>
-
-          <div className="hero-animate-subtitle mx-auto mb-8 w-16 h-[1px]" style={{ background: "var(--gold)" }} />
 
           <p className="hero-animate-subtitle text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
             Eu ajudo importadoras, vinícolas e marcas do setor a responder essa pergunta com clareza

@@ -42,8 +42,8 @@ const Navbar = () => {
           <img
             src={taninLogo}
             alt="Tanin"
-            className={`transition-all duration-500 ${
-              scrolled ? "h-9" : "h-12"
+            className={`transition-all duration-500 h-8 ${
+              scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
             }`}
           />
         </a>
